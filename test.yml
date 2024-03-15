@@ -1,0 +1,52 @@
+services:
+  h2db:
+    build: ./h2db
+    ports:
+      - "8082:8082"
+    container_name: h2db-container
+    restart: always
+
+  shipper-service:
+    build: ./shipper-service
+    container_name: shipper-service-container
+    ports:
+      - "8100:8080"
+    environment:
+      - "DB_HOST=h2db"
+    depends_on:
+      - h2db
+    restart: always
+
+  customer-service:
+    build: ./customer-service
+    container_name: customer-service-container
+    ports:
+      - "8200:8080"
+    environment:
+      - "DB_HOST=h2db"
+    depends_on:
+      - h2db
+    restart: always
+
+  category-service:
+    build: ./category-service
+    container_name: category-service-container
+    ports:
+      - "8300:8080"
+    environment:
+      - "DB_HOST=h2db"
+    depends_on:
+      - h2db
+    restart: always
+
+
+  supplier-service:
+    build: ./supplier-service
+    container_name: supplier-service-container
+    ports:
+      - "8400:8080"
+    environment:
+      - "DB_HOST=h2db"
+    depends_on:
+      - h2db
+    restart: always
